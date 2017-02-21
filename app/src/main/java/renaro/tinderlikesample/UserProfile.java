@@ -1,10 +1,13 @@
 package renaro.tinderlikesample;
 
+import renaro.tinderlikesample.model.RemoteProfile;
+
 /**
  * Created by renarosantos on 05/02/17.
  */
 public class UserProfile {
 
+    public static final int DEFAULT_AGE = 18;
     private final String imageUrl;
     private final String name;
     private final int age;
@@ -25,5 +28,18 @@ public class UserProfile {
 
     public int getAge() {
         return age;
+    }
+
+    public static UserProfile from(final RemoteProfile profile) {
+        int age = getAge(profile.age);
+        return new UserProfile(profile.cover, profile.name, age);
+    }
+
+    private static int getAge(final String age) {
+        try {
+            return Integer.parseInt(age);
+        } catch (NumberFormatException e) {
+            return DEFAULT_AGE;
+        }
     }
 }

@@ -12,4 +12,8 @@ public interface VotingActivityView {
     void hideLoading();
 
     void showProfiles(List<UserProfile> profiles);
+
+    void showNegativeVote();
+
+    void showPositiveVote();
 }
