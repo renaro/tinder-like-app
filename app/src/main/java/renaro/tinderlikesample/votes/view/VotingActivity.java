@@ -4,6 +4,7 @@ import android.content.Context;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.view.View;
+import android.widget.Toast;
 
 import com.lorentzos.flingswipe.SwipeFlingAdapterView;
 
@@ -73,6 +74,11 @@ public class VotingActivity extends BaseActivity<VotingPresenter>
     @Override
     public void showPositiveVote() {
         mSwipeList.getTopCardListener().selectRight();
+    }
+
+    @Override
+    public void showMatch(final UserProfile lastProfileRemoved) {
+        Toast.makeText(this, "Match with "+lastProfileRemoved.getName(), Toast.LENGTH_SHORT).show();
     }
 
     @Override

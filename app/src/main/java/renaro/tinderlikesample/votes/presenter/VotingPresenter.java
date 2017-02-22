@@ -53,11 +53,11 @@ public class VotingPresenter extends BasePresenter {
     }
 
     public void leftCardExit() {
-        mProfileBO.profileVoted(mLastProfileRemoved, false);
+        mTaskExecutor.async(new VoteTask(false));
     }
 
     public void rightCardExit() {
-        mProfileBO.profileVoted(mLastProfileRemoved, true);
+        mTaskExecutor.async(new VoteTask(true));
     }
 
     public void onEmptyList() {
@@ -75,6 +75,27 @@ public class VotingPresenter extends BasePresenter {
         public void onPostExecute(@Nullable final List<UserProfile> result) {
             mView.hideLoading();
             mView.showProfiles(result);
+        }
+    }
+
+    private class VoteTask implements AppTask<Boolean> {
+
+        private final boolean mVote;
+
+        public VoteTask(final boolean vote) {
+            mVote = vote;
+        }
+
+        @Override
+        public Boolean execute() {
+            return mProfileBO.profileVoted(mLastProfileRemoved, mVote);
+        }
+
+        @Override
+        public void onPostExecute(@Nullable final Boolean isMatch) {
+            if (isMatch != null && isMatch) {
+                mView.showMatch(mLastProfileRemoved);
+            }
         }
     }
 }

@@ -44,4 +44,8 @@ public class UserProfile {
             return DEFAULT_AGE;
         }
     }
+
+    public int getId() {
+        return id;
+    }
 }

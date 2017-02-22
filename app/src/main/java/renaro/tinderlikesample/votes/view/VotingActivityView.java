@@ -18,4 +18,6 @@ public interface VotingActivityView {
     void showNegativeVote();
 
     void showPositiveVote();
+
+    void showMatch(UserProfile lastProfileRemoved);
 }
