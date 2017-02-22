@@ -6,7 +6,7 @@
                 android:layout_height="match_parent"
                 android:paddingBottom="@dimen/activity_vertical_margin"
                 android:paddingTop="@dimen/activity_vertical_margin"
-                tools:context="renaro.tinderlikesample.VotingActivity"
+                tools:context="renaro.tinderlikesample.votes.view.VotingActivity"
                 xmlns:app="http://schemas.android.com/apk/res-auto">
 
     <ProgressBar

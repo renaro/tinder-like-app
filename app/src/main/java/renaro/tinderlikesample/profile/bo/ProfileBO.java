@@ -21,4 +21,8 @@ public class ProfileBO {
     public List<UserProfile> fetchProfiles() {
         return mDao.fetchProfiles();
     }
+
+    public void profileVoted(final UserProfile profile, final boolean vote) {
+
+    }
 }

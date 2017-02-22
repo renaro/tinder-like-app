@@ -8,11 +8,13 @@ import renaro.tinderlikesample.model.RemoteProfile;
 public class UserProfile {
 
     public static final int DEFAULT_AGE = 18;
+    private final int id;
     private final String imageUrl;
     private final String name;
     private final int age;
 
-    public UserProfile(final String imageUrl, final String name, final int age) {
+    public UserProfile(final int id, final String imageUrl, final String name, final int age) {
+        this.id = id;
         this.imageUrl = imageUrl;
         this.name = name;
         this.age = age;
@@ -32,7 +34,7 @@ public class UserProfile {
 
     public static UserProfile from(final RemoteProfile profile) {
         int age = getAge(profile.age);
-        return new UserProfile(profile.cover, profile.name, age);
+        return new UserProfile(profile.id, profile.cover, profile.name, age);
     }
 
     private static int getAge(final String age) {

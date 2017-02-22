@@ -1,29 +1,29 @@
-package renaro.tinderlikesample;
+package renaro.tinderlikesample.votes.view;
 
 import android.content.Context;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.view.View;
-import android.widget.ArrayAdapter;
-import android.widget.Toast;
 
 import com.lorentzos.flingswipe.SwipeFlingAdapterView;
 
-import java.util.ArrayList;
 import java.util.List;
 
+import renaro.tinderlikesample.R;
+import renaro.tinderlikesample.UserProfile;
 import renaro.tinderlikesample.base.BaseActivity;
 import renaro.tinderlikesample.profile.bo.ProfileBO;
 import renaro.tinderlikesample.profile.dao.AppProfileDAO;
 import renaro.tinderlikesample.task.AppTaskExecutor;
+import renaro.tinderlikesample.votes.presenter.VotingPresenter;
 
 public class VotingActivity extends BaseActivity<VotingPresenter>
-        implements VotingActivityView, SwipeFlingAdapterView.onFlingListener, View.OnClickListener {
+        implements VotingActivityView, SwipeFlingAdapterView.onFlingListener, View.OnClickListener,
+                   ProfileAdapter.ProfileListener {
 
     private View loading;
-    private ArrayAdapter<String> arrayAdapter;
-    private ArrayList<String> list;
     private SwipeFlingAdapterView mSwipeList;
+    private ProfileAdapter mAdapter;
 
     @NonNull
     @Override
@@ -40,20 +40,9 @@ public class VotingActivity extends BaseActivity<VotingPresenter>
 
         loading = findViewById(R.id.loading);
         mSwipeList = (SwipeFlingAdapterView) findViewById(R.id.swipe_list);
-        populateListWithProfile();
         mSwipeList.setFlingListener(this);
         positiveButton.setOnClickListener(this);
         negativeButton.setOnClickListener(this);
-    }
-
-    private void populateListWithProfile() {
-        list = new ArrayList<>();
-        list.add("php");
-        list.add("c");
-        list.add("python");
-        list.add("java");
-        arrayAdapter = new ArrayAdapter<>(this, R.layout.profile_card, R.id.profile_info, list);
-        mSwipeList.setAdapter(arrayAdapter);
     }
 
     @Override
@@ -68,6 +57,11 @@ public class VotingActivity extends BaseActivity<VotingPresenter>
 
     @Override
     public void showProfiles(final List<UserProfile> profiles) {
+        UserProfile[] array = new UserProfile[profiles.size()];
+        mAdapter = new ProfileAdapter(this, R.layout.profile_card, profiles.toArray(array));
+        mAdapter.setListener(this);
+        mSwipeList.setAdapter(mAdapter);
+        mAdapter.notifyDataSetChanged();
 
     }
 
@@ -83,28 +77,27 @@ public class VotingActivity extends BaseActivity<VotingPresenter>
 
     @Override
     public void removeFirstObjectInAdapter() {
-        list.remove(0);
-        arrayAdapter.notifyDataSetChanged();
+        mAdapter.removeTop();
     }
 
     @Override
     public void onLeftCardExit(final Object o) {
-        Toast.makeText(this, "LEFT", Toast.LENGTH_SHORT).show();
+        mPresenter.leftCardExit();
     }
 
     @Override
     public void onRightCardExit(final Object o) {
-        Toast.makeText(this, "right", Toast.LENGTH_SHORT).show();
+        mPresenter.rightCardExit();
     }
 
     @Override
     public void onAdapterAboutToEmpty(final int i) {
-
+        //intentionally left in blank
     }
 
     @Override
     public void onScroll(final float v) {
-
+        //intentionally left in blank
     }
 
     @Override
@@ -117,5 +110,15 @@ public class VotingActivity extends BaseActivity<VotingPresenter>
                 mPresenter.onNegativeButtonClicked();
                 break;
         }
+    }
+
+    @Override
+    public void onProfileRemoved(@NonNull final UserProfile profile) {
+        mPresenter.onProfileRemoved(profile);
+    }
+
+    @Override
+    public void onEmptyList() {
+        mPresenter.onEmptyList();
     }
 }

@@ -1,6 +1,8 @@
-package renaro.tinderlikesample;
+package renaro.tinderlikesample.votes.view;
 
 import java.util.List;
+
+import renaro.tinderlikesample.UserProfile;
 
 /**
  * Created by renarosantos on 05/02/17.
