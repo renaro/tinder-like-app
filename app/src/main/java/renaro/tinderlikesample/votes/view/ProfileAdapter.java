@@ -12,6 +12,7 @@ import android.widget.TextView;
 import com.bumptech.glide.Glide;
 
 import java.util.Arrays;
+import java.util.Locale;
 
 import renaro.tinderlikesample.R;
 import renaro.tinderlikesample.UserProfile;
@@ -21,6 +22,7 @@ import renaro.tinderlikesample.UserProfile;
  */
 public class ProfileAdapter extends ArrayAdapter<UserProfile> {
 
+    public static final String NAME_AND_AGE_STRING_FORMAT = "%s, %d";
     private final Context mContext;
     private UserProfile[] mProfiles;
     private ProfileListener mListener;
@@ -54,7 +56,8 @@ public class ProfileAdapter extends ArrayAdapter<UserProfile> {
             }
             TextView nameTextView = (TextView) root.findViewById(R.id.profile_info);
             ImageView imageView = (ImageView) root.findViewById(R.id.image);
-            nameTextView.setText(profile.getName());
+            nameTextView.setText(String.format(Locale.getDefault(), NAME_AND_AGE_STRING_FORMAT, profile.getName(),
+                    profile.getAge()));
 
             Glide.with(mContext).load(profile.getImageUrl()).centerCrop().crossFade().into(imageView);
         }
