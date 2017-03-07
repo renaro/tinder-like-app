@@ -19,5 +19,5 @@ public interface VotingActivityView {
 
     void showPositiveVote();
 
-    void showMatch(UserProfile matchedProfile);
+    void showMatch(UserProfile profile);
 }

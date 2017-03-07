@@ -4,7 +4,6 @@ import android.content.Context;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.view.View;
-import android.widget.Toast;
 
 import com.lorentzos.flingswipe.SwipeFlingAdapterView;
 
@@ -19,12 +18,12 @@ import renaro.tinderlikesample.task.AppTaskExecutor;
 import renaro.tinderlikesample.votes.presenter.VotingPresenter;
 
 public class VotingActivity extends BaseActivity<VotingPresenter>
-        implements VotingActivityView, SwipeFlingAdapterView.onFlingListener, View.OnClickListener,
-                   ProfileAdapter.ProfileListener {
+        implements VotingActivityView, ProfileAdapter.ProfileListener {
 
     private View loading;
     private SwipeFlingAdapterView mSwipeList;
     private ProfileAdapter mAdapter;
+    private MatchDialog mMatchDialog;
 
     @NonNull
     @Override
@@ -36,14 +35,15 @@ public class VotingActivity extends BaseActivity<VotingPresenter>
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_voting);
-        final View positiveButton = findViewById(R.id.positive_button);
-        final View negativeButton = findViewById(R.id.negative_button);
+        final View heartIcon = findViewById(R.id.heart_icon);
+        final View brokenHeartIcon = findViewById(R.id.broken_hear_icon);
 
         loading = findViewById(R.id.loading);
         mSwipeList = (SwipeFlingAdapterView) findViewById(R.id.swipe_list);
-        mSwipeList.setFlingListener(this);
-        positiveButton.setOnClickListener(this);
-        negativeButton.setOnClickListener(this);
+        mSwipeList.setFlingListener(new SwipeListener());
+        OnVoteButtonsClicked onVoteButtonsClicked = new OnVoteButtonsClicked();
+        heartIcon.setOnClickListener(onVoteButtonsClicked);
+        brokenHeartIcon.setOnClickListener(onVoteButtonsClicked);
     }
 
     @Override
@@ -63,7 +63,6 @@ public class VotingActivity extends BaseActivity<VotingPresenter>
         mAdapter.setListener(this);
         mSwipeList.setAdapter(mAdapter);
         mAdapter.notifyDataSetChanged();
-
     }
 
     @Override
@@ -77,45 +76,10 @@ public class VotingActivity extends BaseActivity<VotingPresenter>
     }
 
     @Override
-    public void showMatch(final UserProfile lastProfileRemoved) {
-        Toast.makeText(this, "Match with "+lastProfileRemoved.getName(), Toast.LENGTH_SHORT).show();
-    }
-
-    @Override
-    public void removeFirstObjectInAdapter() {
-        mAdapter.removeTop();
-    }
-
-    @Override
-    public void onLeftCardExit(final Object o) {
-        mPresenter.leftCardExit();
-    }
-
-    @Override
-    public void onRightCardExit(final Object o) {
-        mPresenter.rightCardExit();
-    }
-
-    @Override
-    public void onAdapterAboutToEmpty(final int i) {
-        //intentionally left in blank
-    }
-
-    @Override
-    public void onScroll(final float v) {
-        //intentionally left in blank
-    }
-
-    @Override
-    public void onClick(final View view) {
-        switch (view.getId()) {
-            case R.id.positive_button:
-                mPresenter.onPositiveButtonClicked();
-                break;
-            case R.id.negative_button:
-                mPresenter.onNegativeButtonClicked();
-                break;
-        }
+    public void showMatch(final UserProfile profile) {
+        mMatchDialog = new MatchDialog(this);
+        mMatchDialog.setProfile(profile);
+        mMatchDialog.show();
     }
 
     @Override
@@ -126,5 +90,52 @@ public class VotingActivity extends BaseActivity<VotingPresenter>
     @Override
     public void onEmptyList() {
         mPresenter.onEmptyList();
+    }
+
+    @Override
+    protected void onStop() {
+        super.onStop();
+        if (mMatchDialog != null) {
+            mMatchDialog.dismiss();
+        }
+    }
+
+    private class SwipeListener implements SwipeFlingAdapterView.onFlingListener {
+        @Override
+        public void removeFirstObjectInAdapter() {
+            mAdapter.removeTop();
+        }
+
+        @Override
+        public void onLeftCardExit(final Object o) {
+            mPresenter.onSlideProfileToLeft();
+        }
+
+        @Override
+        public void onRightCardExit(final Object o) {
+            mPresenter.onSlideProfileToRight();
+        }
+
+        @Override
+        public void onAdapterAboutToEmpty(final int i) {
+        }
+
+        @Override
+        public void onScroll(final float v) {
+        }
+    }
+
+    private class OnVoteButtonsClicked implements View.OnClickListener {
+        @Override
+        public void onClick(final View view) {
+            switch (view.getId()) {
+                case R.id.heart_icon:
+                    mPresenter.onPositiveButtonClicked();
+                    break;
+                case R.id.broken_hear_icon:
+                    mPresenter.onNegativeButtonClicked();
+                    break;
+            }
+        }
     }
 }

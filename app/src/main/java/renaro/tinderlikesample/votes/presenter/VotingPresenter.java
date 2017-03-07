@@ -52,11 +52,11 @@ public class VotingPresenter extends BasePresenter {
         mLastProfileRemoved = profile;
     }
 
-    public void leftCardExit() {
+    public void onSlideProfileToLeft() {
         mTaskExecutor.async(new VoteTask(false));
     }
 
-    public void rightCardExit() {
+    public void onSlideProfileToRight() {
         mTaskExecutor.async(new VoteTask(true));
     }
 

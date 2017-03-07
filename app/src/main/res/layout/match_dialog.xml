@@ -1,0 +1,58 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+              xmlns:tools="http://schemas.android.com/tools"
+              android:layout_width="match_parent"
+              android:layout_height="wrap_content"
+              android:minWidth="300dp"
+              android:orientation="vertical">
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center_horizontal"
+        android:layout_marginTop="35dp"
+        android:fontFamily="sans-serif-medium"
+        android:gravity="center_horizontal"
+        android:text="Congratulations! \n It is a match!"
+        android:textAllCaps="true"
+        android:textSize="18sp"
+        android:textStyle="bold"
+        />
+
+
+    <ImageView
+        android:id="@+id/profile_image"
+        android:layout_width="80dp"
+        android:layout_height="80dp"
+        android:layout_gravity="center_horizontal"
+        android:layout_marginTop="30dp"/>
+
+    <TextView
+        android:id="@+id/user_profile"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center_horizontal"
+        android:layout_marginTop="35dp"
+        android:fontFamily="sans-serif-medium"
+        android:gravity="center_horizontal"
+        android:textAllCaps="true"
+        android:textSize="18sp"
+        android:textStyle="bold"
+        tools:text="Joanna, 21"
+        />
+
+    <TextView
+        android:id="@+id/chat_button"
+        android:layout_width="match_parent"
+        android:layout_height="40dp"
+        android:text="chat now !"
+        android:gravity="center"
+        android:textSize="20sp"
+        android:textStyle="bold"
+        android:textAllCaps="true"
+        android:layout_marginTop="20dp"
+        android:textColor="#fafafa"
+        android:background="#bc1e1b"
+        />
+
+</LinearLayout>

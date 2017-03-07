@@ -44,7 +44,7 @@
 
 
         <ImageView
-            android:id="@+id/negative_button"
+            android:id="@+id/broken_hear_icon"
             android:layout_width="0dp"
             android:layout_weight="1"
             android:layout_height="wrap_content"
@@ -53,7 +53,7 @@
             />
 
         <ImageView
-            android:id="@+id/positive_button"
+            android:id="@+id/heart_icon"
             android:layout_width="0dp"
             android:layout_weight="1"
             android:layout_height="wrap_content"
