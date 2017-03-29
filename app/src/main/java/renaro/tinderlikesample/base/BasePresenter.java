@@ -16,11 +16,6 @@ public abstract class BasePresenter {
     protected BasePresenter() {
     }
 
-    @NonNull
-    public static BasePresenter nullPresenter(@NonNull final Context context) {
-        return new BasePresenter() {};
-    }
-
     @CallSuper
     public void onCreate(@Nullable final Bundle savedInstanceState) {
     }
