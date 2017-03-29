@@ -20,7 +20,7 @@ public class VotingPresenter extends BasePresenter {
     private final VotingActivityView mView;
     private final TaskExecutor mTaskExecutor;
     private final ProfileBO mProfileBO;
-    private UserProfile mLastProfileRemoved;
+    private UserProfile mLastSeenProfile;
 
     public VotingPresenter(@NonNull final VotingActivityView view, @NonNull final TaskExecutor taskExecutor,
                            @NonNull final ProfileBO profileBO) {
@@ -49,7 +49,7 @@ public class VotingPresenter extends BasePresenter {
     }
 
     public void onProfileRemoved(final UserProfile profile) {
-        mLastProfileRemoved = profile;
+        mLastSeenProfile = profile;
     }
 
     public void onSlideProfileToLeft() {
@@ -88,13 +88,13 @@ public class VotingPresenter extends BasePresenter {
 
         @Override
         public Boolean execute() {
-            return mProfileBO.profileVoted(mLastProfileRemoved, mVote);
+            return mProfileBO.profileVoted(mLastSeenProfile, mVote);
         }
 
         @Override
         public void onPostExecute(@Nullable final Boolean isMatch) {
             if (isMatch != null && isMatch) {
-                mView.showMatch(mLastProfileRemoved);
+                mView.showMatch(mLastSeenProfile);
             }
         }
     }
