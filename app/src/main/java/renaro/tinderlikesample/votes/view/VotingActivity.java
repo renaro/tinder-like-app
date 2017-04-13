@@ -83,6 +83,11 @@ public class VotingActivity extends BaseActivity<VotingPresenter>
     }
 
     @Override
+    public int cardsLeft() {
+        return mSwipeList.getChildCount();
+    }
+
+    @Override
     public void onProfileRemoved(@NonNull final UserProfile profile) {
         mPresenter.onProfileRemoved(profile);
     }

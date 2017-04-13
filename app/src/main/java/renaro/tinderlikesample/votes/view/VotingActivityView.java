@@ -20,4 +20,6 @@ public interface VotingActivityView {
     void showPositiveVote();
 
     void showMatch(UserProfile profile);
+
+    int cardsLeft();
 }

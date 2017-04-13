@@ -98,4 +98,22 @@ public class VotingPresenter extends BasePresenter {
             }
         }
     }
+
+
+    /*
+    * method to demonstrate how to get data from the view Interface
+    * */
+    private void checkCardsLeft() {
+        int amountLeft = mView.cardsLeft();
+        checkIfActionIsRerquired(amountLeft);
+    }
+
+    /*
+    * This method is intentionally left blank for demo purposes
+    * */
+    private void checkIfActionIsRerquired(int amountLeft) {
+        //intentionally left blank
+    }
+
+
 }
