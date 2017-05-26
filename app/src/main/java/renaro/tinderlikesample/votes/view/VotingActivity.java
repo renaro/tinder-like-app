@@ -4,6 +4,7 @@ import android.content.Context;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.view.View;
+import android.widget.Toast;
 
 import com.lorentzos.flingswipe.SwipeFlingAdapterView;
 
@@ -85,6 +86,11 @@ public class VotingActivity extends BaseActivity<VotingPresenter>
     @Override
     public int cardsLeft() {
         return mSwipeList.getChildCount();
+    }
+
+    @Override
+    public void showOutOfVotes() {
+        Toast.makeText(this, "Out of Votes! Wait", Toast.LENGTH_SHORT).show();
     }
 
     @Override

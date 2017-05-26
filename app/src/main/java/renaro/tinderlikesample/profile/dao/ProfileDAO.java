@@ -10,4 +10,8 @@ import renaro.tinderlikesample.UserProfile;
 public abstract class ProfileDAO {
 
     public abstract List<UserProfile> fetchProfiles();
+
+    public abstract int fetchRemainingVotes();
+
+    public abstract boolean voteProfile(final UserProfile profile, final boolean vote);
 }

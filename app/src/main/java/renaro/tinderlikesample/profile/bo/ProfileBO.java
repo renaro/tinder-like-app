@@ -7,13 +7,13 @@ import java.util.List;
 
 import renaro.tinderlikesample.UserProfile;
 import renaro.tinderlikesample.profile.dao.ProfileDAO;
+import renaro.tinderlikesample.votes.model.VoteResponse;
 
 /**
  * Created by renarosantos on 21/02/17.
  */
 public class ProfileBO {
 
-    private static final int SOME_RANDOM_ID = 3;
     private final ProfileDAO mDao;
 
     public ProfileBO(@NonNull final ProfileDAO dao) {
@@ -25,10 +25,14 @@ public class ProfileBO {
     }
 
     @WorkerThread
-    public boolean profileVoted(final UserProfile profile, final boolean vote) {
-        if (vote && profile.getId() == SOME_RANDOM_ID) {
-            return true;
+    public VoteResponse profileVoted(final UserProfile profile, final boolean vote) {
+        final int remainingVotes = mDao.fetchRemainingVotes();
+        if (remainingVotes == 0){
+            return new VoteResponse(false, true);
+        } else {
+            final boolean isAMatch = mDao.voteProfile(profile, vote);
+            return new VoteResponse(isAMatch, false);
         }
-        return false;
+
     }
 }

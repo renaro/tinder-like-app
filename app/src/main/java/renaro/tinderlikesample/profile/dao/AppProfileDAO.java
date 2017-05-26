@@ -22,6 +22,7 @@ import retrofit2.converter.gson.GsonConverterFactory;
 
 public class AppProfileDAO extends ProfileDAO {
 
+    private static final int SOME_RANDOM_ID = 3;
     private final BackendServer mService;
     private int MOCK_WAIT_INTERVAL = 1500;
 
@@ -52,5 +53,15 @@ public class AppProfileDAO extends ProfileDAO {
             e.printStackTrace();
         }
         return new ArrayList<>();
+    }
+
+    @Override
+    public int fetchRemainingVotes() {
+        return 3;
+    }
+
+    @Override
+    public boolean voteProfile(final UserProfile profile, final boolean vote) {
+        return profile.getId() == SOME_RANDOM_ID && vote;
     }
 }

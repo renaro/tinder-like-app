@@ -22,4 +22,6 @@ public interface VotingActivityView {
     void showMatch(UserProfile profile);
 
     int cardsLeft();
+
+    void showOutOfVotes();
 }

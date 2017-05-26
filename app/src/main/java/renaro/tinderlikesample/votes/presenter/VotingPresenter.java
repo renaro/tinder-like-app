@@ -10,6 +10,7 @@ import renaro.tinderlikesample.base.BasePresenter;
 import renaro.tinderlikesample.profile.bo.ProfileBO;
 import renaro.tinderlikesample.task.AppTask;
 import renaro.tinderlikesample.task.TaskExecutor;
+import renaro.tinderlikesample.votes.model.VoteResponse;
 import renaro.tinderlikesample.votes.view.VotingActivityView;
 
 /**
@@ -78,7 +79,7 @@ public class VotingPresenter extends BasePresenter {
         }
     }
 
-    private class VoteTask implements AppTask<Boolean> {
+    private class VoteTask implements AppTask<VoteResponse> {
 
         private final boolean mVote;
 
@@ -87,14 +88,16 @@ public class VotingPresenter extends BasePresenter {
         }
 
         @Override
-        public Boolean execute() {
+        public VoteResponse execute() {
             return mProfileBO.profileVoted(mLastSeenProfile, mVote);
         }
 
         @Override
-        public void onPostExecute(@Nullable final Boolean isMatch) {
-            if (isMatch != null && isMatch) {
+        public void onPostExecute(@Nullable final VoteResponse result) {
+            if (result != null && result.isMatch()) {
                 mView.showMatch(mLastSeenProfile);
+            } else if(result !=null && result.isOutOfVotes()){
+                mView.showOutOfVotes();
             }
         }
     }

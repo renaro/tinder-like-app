@@ -65,6 +65,9 @@ public class ProfileAdapter extends ArrayAdapter<UserProfile> {
     }
 
     public void removeTop() {
+        if(mProfiles.length == 0){
+            return;
+        }
         UserProfile removedProfile = mProfiles[0];
         if (mProfiles.length > 1) {
             mProfiles = Arrays.copyOfRange(mProfiles, 1, mProfiles.length);
